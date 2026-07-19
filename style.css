@@ -1,0 +1,483 @@
+/* ==========================================
+   1. フォントファイルを確実に読み込む
+   ========================================= */
+@font-face {
+    font-family: 'Mochizuki';
+    src: url('font.woff2') format('woff2');
+    font-display: swap;
+}
+
+/* ==========================================
+   2. サイト全体の緊急余白リセット（白抜きの根本原因を全破壊）
+   ========================================== */
+html {
+    scroll-behavior: smooth;
+    overflow-y: scroll !important;
+}
+
+/* ⭕ 修正：すべての要素の勝手な余白（margin/padding）を一括で0にして白抜けを強制ブロック */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: white;
+    color: #CF7AF0;
+    font-family: 'Mochizuki', sans-serif;
+    height: auto !important;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+/* ===========================
+   3. トップ画面（メインビジュアル）
+   ========================== */
+.hero {
+    width: 100%;
+    /* ⭕ 修正：高さをガチガチにロックせず、画面ぴったりに広げる設定 */
+    min-height: 100vh; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    background: linear-gradient(
+        135deg,
+        #ffffff 0%,
+        #f5ebff 45%,
+        #E7C5FF 100%
+    );
+    /* ⭕ 修正：上部（メニューの裏側）の隙間を完全に埋めるための内側余白 */
+    padding: 14px 20px;
+}
+
+.title-image {
+    max-width: 750px;
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+/* ⭕ 修正：ブラウザが勝手につける上下の隙間を完全に0にします */
+h1, p {
+    margin: 0;
+    padding: 0;
+}
+
+p {
+    font-size: 22px;
+}
+
+/* Discordボタン */
+button {
+    margin-top: 30px;
+    padding: 18px 45px;
+    border: none;
+    border-radius: 15px;
+    background: #7b2cff;
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 30px #7b2cff;
+}
+
+/* ===========================
+   4. ナビゲーションバー
+   =========================== */
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    background: transparent;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 40px;
+    margin: 0;
+    padding: 0;
+}
+
+nav a {
+    color: #7b2cff; 
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+    transition: .3s;
+}
+
+nav a:hover {
+    color: #9b5cff;
+}
+
+/* ==========================================
+   5. スクロール用・各画面のベース設定
+   ========================================== */
+.page-section {
+    width: 100%;
+    min-height: 100vh; 
+    height: auto !important; 
+    /* ⭕ 修正：上下にしっかり余白をとりつつ、はみ出しによる白抜けを防ぎます */
+    padding: 100px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+/* 🎨 あばうと画面（だいふくヒストリー） */
+#about {
+    background-color: #fdf8ff;
+    /* ⭕ 修正：ホームとの間の白い線を完全に消し去り、地続きで繋げます */
+    border-top: none;
+    width: 100%;
+}
+
+.section-title {
+    font-size: 32px;
+    margin-top: 60px;
+    margin-bottom: 30px;
+    color: #7b2cff;
+}
+
+.history-sub {
+    font-size: 18px;
+    color: #7b2cff;
+    font-weight: bold;
+    margin-bottom: 40px;
+}
+
+/* 付箋を並べる入れ物 */
+.sticky-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+    max-width: 1200px;
+    width: 100%;
+    margin-bottom: 50px;
+}
+
+/* 付箋のデザイン */
+.sticky-note {
+    background: #fff8bd;
+    color: #333333;
+    width: 260px;
+    min-height: 260px;
+    padding: 25px;
+    border-radius: 4px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.08);
+    text-align: left;
+    position: relative;
+    transition: .3s;
+    transform: rotate(-1.5deg);
+}
+
+.sticky-note:hover {
+    transform: scale(1.05) rotate(1deg);
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.12);
+    z-index: 10;
+}
+
+.sticky-note::before {
+    content: "📌";
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 24px;
+}
+
+.sticky-date {
+    font-size: 14px;
+    font-weight: bold;
+    color: #ff7be5;
+    display: block;
+    margin-bottom: 10px;
+    border-bottom: 1px dotted rgba(0,0,0,0.1);
+    padding-bottom: 5px;
+}
+
+.sticky-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #111111;
+}
+
+.sticky-text {
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 0;
+    color: #555555;
+}
+
+/* ニュース用の四角い枠デザイン */
+.news-container {
+    max-width: 800px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 50px;
+}
+
+.news-card {
+    background: white;
+    border-radius: 15px;
+    padding: 20px 30px;
+    box-shadow: 0 5px 15px rgba(207, 122, 240, 0.1);
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: 0.3s;
+    border-left: 6px solid #7b2cff;
+}
+
+.news-card:hover {
+    transform: translateX(5px);
+    box-shadow: 0 8px 25px rgba(207, 122, 240, 0.2);
+}
+
+.news-date {
+    font-size: 14px;
+    font-weight: bold;
+    color: #ff7be5;
+    white-space: nowrap;
+}
+
+.news-text {
+    font-size: 16px;
+    color: #555555;
+    margin: 0;
+    font-weight: bold;
+}
+
+/* 関連サーバー用デザイン */
+.server-container {
+    max-width: 800px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.server-card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px 30px;
+    box-shadow: 0 6px 20px rgba(123, 44, 255, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    transition: 0.3s;
+    border: 1px solid #ead5ff;
+}
+
+.server-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(123, 44, 255, 0.12);
+}
+
+.server-text-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: left;
+}
+
+.server-name {
+    font-size: 22px;
+    font-weight: bold;
+    color: #7b2cff;
+}
+
+.server-desc {
+    font-size: 16px;
+    color: #555555;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.server-join-btn {
+    background: #7b2cff;
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: 0.2s;
+}
+
+.server-join-btn:hover {
+    background: #ff7be5;
+    box-shadow: 0 5px 15px rgba(255, 123, 229, 0.4);
+}
+
+/* 👥 メンバー紹介画面 & bot依頼画面 */
+#server {
+    background-color: #ffffff;
+    border-top: 2px dashed #E7C5FF;
+}
+
+#contact {
+    background-color: #fdf8ff;
+    border-top: 2px dashed #E7C5FF;
+}
+
+.box {
+    background: white;
+    padding: 40px 60px;
+    border-radius: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    margin-top: 25px;
+}
+
+@media (max-width: 600px) {
+    .sticky-note { width: 100%; }
+    .news-card { flex-direction: column; align-items: flex-start; gap: 5px; }
+    .server-card { flex-direction: column; text-align: center; }
+    .server-text-group { text-align: center; }
+}
+
+/* ライフハック！ & 名簿 */
+#rifehuck{
+    background: linear-gradient(180deg, #fff7fd 0%, #f8f0ff 100%);
+    border-top: 2px dashed #E7C5FF;
+}
+
+#server{
+    background-color: #fdf8ff;
+
+}
+
+/*==========================
+    公開Bot
+==========================*/
+
+.bot-container{
+
+    width:100%;
+    max-width:1000px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:25px;
+
+}
+
+
+.bot-card{
+
+    background:white;
+
+    border:2px solid #ead5ff;
+
+    border-radius:25px;
+
+    padding:25px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:25px;
+
+    box-shadow:0 8px 25px rgba(123,44,255,.08);
+
+    transition:.25s;
+
+}
+
+
+.bot-card:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 15px 35px rgba(123,44,255,.15);
+
+}
+
+
+.bot-icon{
+
+    width:90px;
+
+    height:90px;
+
+    border-radius:20px;
+
+    object-fit:cover;
+
+}
+
+
+.bot-info{
+
+    flex:1;
+
+    text-align:left;
+
+}
+
+
+.bot-info h2{
+
+    color:#7b2cff;
+
+    margin-bottom:10px;
+
+    font-size:28px;
+
+}
+
+
+.bot-info p{
+
+    color:#666;
+
+    font-size:17px;
+
+}
+
+
+.bot-btn{
+
+    width:170px;
+
+    margin-top:0;
+
+    border-radius:15px;
+
+    font-size:20px;
+
+    font-weight:bold;
+
+}

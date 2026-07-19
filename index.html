@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Da1fu912</title>
+    <!-- style.cssを読み込む設定 -->
+    <link rel="stylesheet" href="./style.css">
+    
+    <style>
+        /* 新設したサーバー紹介ページ専用のデザイン設定 */
+        #intro {
+            background-color: #ffffff;
+            border-top: 2px dashed #E7C5FF;
+        }
+
+        .intro-grid {
+            max-width: 800px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .intro-top-row {
+            display: flex;
+            gap: 25px;
+            width: 100%;
+        }
+
+        .intro-card {
+            background: white;
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(123, 44, 255, 0.06);
+            border: 2px solid #ead5ff;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card-left-sub {
+            width: 50%;
+            padding: 30px 25px; /* ボタンが大きく広がるので内側の余白を最適化 */
+        }
+
+        .card-right-sub {
+            width: 50%;
+            padding: 20px 30px;
+        }
+
+        .card-bottom-main {
+            width: 100%;
+            min-height: 350px;
+            align-items: flex-start;
+            text-align: left;
+            padding: 40px;
+        }
+
+        .intro-server-name {
+            font-size: 28px;
+            font-weight: bold;
+            color: #7b2cff;
+            margin-bottom: 5px;
+        }
+
+        .intro-owner {
+            font-size: 15px;
+            color: #888888;
+            font-weight: bold;
+            margin-bottom: 25px; /* ボタンとの隙間を少し広げてバランスを調整 */
+        }
+
+        /* 「にんずう」ロゴ画像の設定 */
+        .ninzu-logo-img {
+            max-width: 140px;
+            width: 100%;
+            height: auto;
+            margin-bottom: 2px;
+        }
+
+        .intro-count-num {
+            font-size: 32px;
+            font-weight: 900;
+            color: #7b2cff;
+            margin: 0 0 15px 0;
+            border-bottom: 2px solid #f5ebff;
+            width: 100%;
+            padding-bottom: 5px;
+            text-align: center;
+        }
+
+        /* 「できた日」ロゴ画像の設定 */
+        .dekitahi-logo-img {
+            max-width: 140px;
+            width: 100%;
+            height: auto;
+            margin-top: 5px;
+            margin-bottom: 2px;
+        }
+
+        .intro-date-val {
+            font-size: 18px;
+            font-weight: bold;
+            color: #555555;
+            margin-top: 5px;
+        }
+
+        .intro-desc-title {
+            font-size: 32px;
+            font-weight: bold;
+            color: #7b2cff;
+            margin-bottom: 20px;
+            border-left: 6px solid #ff7be5;
+            padding-left: 15px;
+        }
+
+        .intro-desc-text {
+            font-size: 18px;
+            color: #555555;
+            line-height: 1.8;
+            margin: 0;
+            font-weight: bold;
+        }
+
+        /* 🎯 変更：左上カードの中の「参加」ボタンを特大化しました */
+        .intro-join-btn {
+            background: #7b2cff;
+            color: white;
+            border: none;
+            width: 100%;            /* ⭕ 変更：カードの横幅いっぱいに引き伸ばす */
+            max-width: 240px;       /* ⭕ 変更：大きくなりすぎない最大の横幅制限 */
+            padding: 15px 0;        /* ⭕ 変更：上下の厚みを増やしてさらにぷっくり立体的に */
+            font-size: 22px;        /* ⭕ 変更：文字サイズを大きく */
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 8px 20px rgba(123, 44, 255, 0.25);
+            margin-top: 0;
+            letter-spacing: 2px;    /* 文字の間隔を少し開けて読みやすく */
+        }
+
+        .intro-join-btn:hover {
+            background: #ff7be5;
+            transform: scale(1.05) translateY(-2px); /* ⭕ 変更：浮き上がる立体アニメーションを強化 */
+            box-shadow: 0 10px 25px rgba(255, 123, 229, 0.45);
+        }
+
+        @media (max-width: 768px) {
+            .intro-top-row { flex-direction: column; }
+            .card-left-sub, .card-right-sub { width: 100%; }
+            .intro-join-btn { max-width: 100%; } /* スマホ画面でも横幅いっぱいに固定 */
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ======================================
+         上のメニュー（ナビゲーションバー）
+    ====================================== -->
+    <nav>
+        <div class="logo">
+            𝕋𝕠𝕣𝕥𝕚𝕝𝕝𝕠𝕟
+        </div>
+        <ul>
+            <li><a href="#home">ホーム</a></li>
+            <li><a href="#about">あばうと</a></li>
+            <li><a href="#intro">サーバー紹介</a></li>
+            <li><a href="#server">メンバー</a></li>
+            <li><a href="#rifehuck">豆知識</a></li>
+            <li><a href="#contact">公開bot</a></li>
+        </ul>
+    </nav>
+
+    <!-- ===== 1. トップ画面（ホーム） ===== -->
+<div class="page-section hero" id="home">
+
+    <img src="Titlehello.png" alt="だいふく" class="title-image">
+
+    <p>カリスマ性あふれる哲学者！だいふく！</p>
+
+    <button onclick="window.open('https://discord.gg/773wa23CA')">
+        さーばーにイグ！
+    </button>
+
+    <a href="#intro" class="hero-link">
+        サーバー紹介へ
+    </a>
+
+</div>
+    <!-- ===== 2. あばうと画面 ===== -->
+    <div class="page-section" id="about">
+        <h1>あばうと</h1>
+        <p class="history-sub">～ だいふくひすとりー ～</p>
+        <div class="sticky-container">
+            <div class="sticky-note">
+                <span class="sticky-date">2026年 6月</span>
+                <div class="sticky-title">荒らし鯖（笑）についた</div>
+                <p class="sticky-text">きのこ帝国の2代目のサーバーのために外部ボットを作ってあげた！今では縁を切っている</p>
+            </div>
+            <div class="sticky-note" style="background: #ffe3f4;">
+                <span class="sticky-date">2026年 6月</span>
+                <div class="sticky-title">ぱるの鯖の人数を増やした</div>
+                <p class="sticky-text">あの空気の読めない障害者ぱるのサーバーに入ってサーバー人数をふやした！でもその鯖はきのこ帝国に支配されてしまった</p>
+            </div>
+            <div class="sticky-note" style="background: #e3ffe5;">
+                <span class="sticky-date">2026年 7月</span>
+                <div class="sticky-title">公式サイト開設</div>
+                <p class="sticky-text">だいふくの、だいふくによる、だいふくのためのホームページがついに完成した歴史的瞬間！</p>
+            </div>
+        </div>
+
+        <h2 class="section-title">📢 にゃーす</h2>
+        <div class="news-container">
+            <div class="news-card">
+                <span class="news-date">2026.07.18</span>
+                <p class="news-text">nukeボットができました！</p>
+            </div>
+            <div class="news-card">
+                <span class="news-date">2026.07.18</span>
+                <p class="news-text">このアラサー鯖いつか荒らしたいね</p>
+            </div>
+            <div class="news-card">
+                <span class="news-date">2026.07.18</span>
+                <p class="news-text">外部ボット完成！</p>
+            </div>
+        </div>
+
+        <h2 class="section-title">🔗 関連サーバー</h2>
+        <div class="server-container">
+            <div class="server-card">
+                <div class="server-text-group">
+                    <span class="server-name">大福至高覇王中央統治天帝国🐙</span>
+                    <p class="server-desc">荒らしを題材としただいふくの元の鯖。今はもう動いていない</p>
+                </div>
+                <button class="server-join-btn" onclick="window.open('https://discord.gg/nFN2eNUFw')">参加する</button>
+            </div>
+            <div class="server-card">
+                <div class="server-text-group">
+                    <span class="server-name">まだ指定されていまえん</span>
+                    <p class="server-desc">連携をしたりするとここに追加されます</p>
+                </div>
+                <button class="server-join-btn" onclick="window.open('https://')">参加する</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 3. サーバー紹介画面 [id="intro"] ===== -->
+    <div class="page-section" id="intro">
+        
+        <div class="intro-grid">
+            <div class="intro-top-row">
+                
+                <!-- 左上：サバ名・創設者・参加ボタン（大きくなりました！） -->
+                <div class="intro-card card-left-sub">
+                    <span class="intro-server-name">私は何もしらない</span>
+                    <span class="intro-owner">　　　 創設者: だいふく</span>
+                    <!-- 💖 特大化した参加ボタン -->
+                    <button class="intro-join-btn" onclick="window.open('https://discord.gg/773wa23CA')">参加</button>
+                </div>
+
+                <!-- 右上：サバ人数 ＆ 創設日 -->
+                <div class="intro-card card-right-sub">
+                    <img src="ninzu.png" alt="にんずう" class="ninzu-logo-img">
+                    <span class="intro-count-num">３６人</span>
+                    
+                    <img src="dekitahi.png" alt="できた日" class="dekitahi-logo-img">
+                    <span class="intro-date-val">2026/06/28</span>
+                </div>
+
+            </div>
+
+            <!-- 下の段：大きな四角（説明文） -->
+            <div class="intro-card card-bottom-main">
+                <h2 class="intro-desc-title">詳細</h2>
+                <p class="intro-desc-text">
+                    　　　🐱💗だいふくのサーバー💗🐱<br><br>
+                    　　すっごい大規模な雑談サーバーにしたい！<br><br>
+                    💗できること💗<br>
+                    ・💬楽しく雑談！<br>
+                    　みんなでワイワイ楽しく雑談ができる！<br>
+                    　ゲームのお話もできるよ！🎮<br>
+                    ・😎ほかのサーバーにイタズラ！<br>
+                    　ボットとかを使ってイタズラすることができるよ！<br>
+                    　　　　（でもやらなくても大丈夫だよ！）<br>
+                    　　あんまりやりすぎると迷惑かけちゃうから遊ぶときは気おつけて！！<br>
+                    ・🤖BOT作成依頼！<br>
+                    　どういうbotにしたいかを言うと作ってくれる！<br>
+                    　　　　（ギフトと交換する場合があるよ！）<br>
+                    ・📚なにやっても問題なし！<br>
+                    　このサーバーはルールがとっても少ない！<br>
+                    　悪口とかえっちなお話もできるよ！🔞
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ===== 4. メンバー紹介画面 ===== -->
+    <div class="page-section" id="server">
+        <h1>名簿</h1>
+        <div class="box">
+            <p>核のめんどくさい</p>
+        </div>
+    </div>
+
+    <!-- ===== 豆知識 ===== -->
+<div class="page-section" id="rifehuck">
+
+    <h1>豆知識</h1>
+    <p class="history-sub">～ しってた？ ～</p>
+
+    <div class="sticky-container">
+
+        <div class="sticky-note">
+            <p class="sticky-text">
+                蛇口から水を飲むとき水が出るところから少し離れて飲むと冷たくなるよ！
+            </p>
+        </div>
+
+        <div class="sticky-note" style="background:#ffe3f4;">
+            <p class="sticky-text">
+                ディスコードで「ctrl+alt+shift+W」をすると瞑想？ができる！
+            </p>
+        </div>
+
+        <div class="sticky-note" style="background:#e3ffe5;">
+            <p class="sticky-text">
+                私の名前は「大福」じゃなくて「だいふく」
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+    <!-- ===== 5. 公開bot ===== -->
+<div class="page-section" id="contact">
+
+    <h1>公開bot</h1>
+
+    <div class="bot-container">
+
+        <!-- Bot1 -->
+        <div class="bot-card">
+
+            <img src="bot1.png" class="bot-icon">
+
+            <div class="bot-info">
+
+                <h2>fนkน งēlงēt</h2>
+
+                <p>
+                    だいふくが気分で追加したコマンドが入ってる！
+                </p>
+
+            </div>
+
+            <button
+            class="bot-btn"
+            onclick="window.open('https://discord.com/oauth2/authorize?client_id=1528261806253019156')">
+                導入
+            </button>
+
+        </div>
+
+        <!-- Bot2 -->
+        <div class="bot-card">
+
+            <img src="bot2.png" class="bot-icon">
+
+            <div class="bot-info">
+
+                <h2>AutoMentions</h2>
+
+                <p>
+                    !gaiji @usernameで20件のメンションができる！
+                </p>
+
+            </div>
+
+            <button
+            class="bot-btn"
+            onclick="window.open('https://discord.com/oauth2/authorize?client_id=1528262862898724904')">
+                導入
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
